@@ -13,6 +13,7 @@ You can :
 Databases supported :
 * MongoDB
 * MySQL
+* PostgreSQL (excluding all_databases option)
 
 Cloud services supported :
 * __Dropbox__       (with the help of [DropboxUploader by hakre](https://github.com/hakre/DropboxUploader))
@@ -70,6 +71,7 @@ dizda_cloud_backup:
     # By default backup files will have your servers hostname as prefix
     # such as: hostname_2014_01_01-21_08_39.tar
     output_file_prefix: hostname 
+    folders: [ web/uploads , other/folder ]
     cloud_storages:
         # Dropbox account credentials (use parameters in config.yml and store real values in prameters.yml)
         dropbox:
@@ -98,6 +100,13 @@ dizda_cloud_backup:
             db_port: ~           # Default 3306
             db_user: ~
             db_password: ~
+
+        postgresql:
+            database: dbname     # Required
+            db_host: localhost   # This, and following is not required and if not specified, the bundle will take ORM configuration in parameters.yml
+            db_port: ~           # Default 5432
+            db_user: ~
+            db_password: ~
 ```
 
 It is recommended to keep real values for logins and passwords in your parameters.yml file, e.g.:
@@ -121,6 +130,9 @@ dizda_cloud_backup:
 
         mysql:
             # When no parameters is specified under mysql, the bundle taking those from parameters.yml
+
+        postgresql:
+            # When no parameters is specified under postgresql, the bundle taking those from parameters.yml
 ```
 
 ```yml
@@ -163,6 +175,8 @@ $ php app/console dizda:backup:start
 ```
 
 ![](https://github.com/dizda/CloudBackupBundle/raw/master/Resources/doc/dizda-Cloud-Backup-Bundle-symfony2.png)
+
+In addition, using -F or --folder option the folders also will be added to the backup.
 
 Capifony integration
 --------------------
